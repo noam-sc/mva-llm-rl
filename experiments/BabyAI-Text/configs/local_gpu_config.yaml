@@ -3,12 +3,12 @@ lamorel_args:
   allow_subgraph_use_whith_gradient: false
   distributed_setup_args:
     n_rl_processes: 1
-    n_llm_processes: 4
+    n_llm_processes: 1
   accelerate_args:
-    config_file: ../custom/accelerate/default_config.yaml
+    config_file: ./accelerate/default_config.yaml
     machine_rank: 0
     main_process_ip: 127.0.0.1
-    main_process_port: {}
+    main_process_port: 29500 
     num_machines: 1
   llm_args:
     model_type: seq2seq
@@ -66,4 +66,4 @@ rl_script_args:
   ## TWC-specific
   twc_levels:
   config_file:
-  train_mode: true
+  train_mode: false

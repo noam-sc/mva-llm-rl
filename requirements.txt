@@ -1,5 +1,5 @@
-numpy==1.23.1
-torch==2.0.1
+numpy==1.25
+torch==2.3.0
 torchaudio
 torchvision
 gym==0.23.1
@@ -7,13 +7,13 @@ sentencepiece>=0.1.91
 tensorboard==2.7.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
-tensorboardX==1.8
+tensorboardX==2.6
 protobuf==3.19.*
 pyyaml
 transformers
 accelerate
 peft
-scipy
+scipy==1.14.0
 openai
 matplotlib
 colorama
@@ -21,7 +21,12 @@ termcolor
 imageio
 wandb
 ipython
-tqdm==4.64.0
+tqdm==4.66.1
 datasets
 bitsandbytes
 einops
+setuptools==65
+psutils
+pyparsing
+six
+colorama
