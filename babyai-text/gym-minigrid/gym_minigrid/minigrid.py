@@ -522,7 +522,7 @@ class Grid:
         """
 
         if highlight_mask is None:
-            highlight_mask = np.zeros(shape=(self.width, self.height), dtype=np.bool)
+            highlight_mask = np.zeros(shape=(self.width, self.height), dtype=np.bool_)
 
         # Compute the total grid size
         width_px = self.width * tile_size
@@ -585,7 +585,7 @@ class Grid:
         width, height, channels = array.shape
         assert channels == 3
 
-        vis_mask = np.ones(shape=(width, height), dtype=np.bool)
+        vis_mask = np.ones(shape=(width, height), dtype=np.bool_)
 
         grid = Grid(width, height)
         for i in range(width):
@@ -598,7 +598,7 @@ class Grid:
         return grid, vis_mask
 
     def process_vis(grid, agent_pos):
-        mask = np.zeros(shape=(grid.width, grid.height), dtype=np.bool)
+        mask = np.zeros(shape=(grid.width, grid.height), dtype=np.bool_)
 
         mask[agent_pos[0], agent_pos[1]] = True
 
@@ -1210,7 +1210,7 @@ class MiniGridEnv(gym.Env):
         if not self.see_through_walls:
             vis_mask = grid.process_vis(agent_pos=(self.agent_view_size // 2, self.agent_view_size - 1))
         else:
-            vis_mask = np.ones(shape=(grid.width, grid.height), dtype=np.bool)
+            vis_mask = np.ones(shape=(grid.width, grid.height), dtype=np.bool_)
 
         # Make it so the agent sees what it's carrying
         # We do this by placing the carried object at the agent's position
@@ -1289,7 +1289,7 @@ class MiniGridEnv(gym.Env):
         top_left = self.agent_pos + f_vec * (self.agent_view_size - 1) - r_vec * (self.agent_view_size // 2)
 
         # Mask of which cells to highlight
-        highlight_mask = np.zeros(shape=(self.width, self.height), dtype=np.bool)
+        highlight_mask = np.zeros(shape=(self.width, self.height), dtype=np.bool_)
 
         # For each cell in the visibility mask
         for vis_j in range(0, self.agent_view_size):
