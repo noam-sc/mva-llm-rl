@@ -7,6 +7,8 @@ __pycache__/
 *.ckpt
 *.pkl
 *.npy
+*.safetensors
+*config.json
 
 # C extensions
 *.so
