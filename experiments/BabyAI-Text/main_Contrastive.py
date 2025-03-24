@@ -26,12 +26,13 @@ from operator import add
 import gc
 import gym
 from environments import EnvEnum
+from torch import nn
 
 from lamorel import Caller, lamorel_init
 from lamorel import BaseUpdater, BaseModuleFunction, BaseModelInitializer
 
 lamorel_init()
-prompt_generator = [generate_prompt, generate_prompt2, prompt_template4, prompt_variant]
+prompt_generator = [Glam_prompt,swap_prompt,xml_prompt,paraphrase_prompt]
 from accelerate import Accelerator
 
 accelerator = Accelerator()
