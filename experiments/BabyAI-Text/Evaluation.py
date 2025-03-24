@@ -464,12 +464,12 @@ def main(config_args):
 
         step = 0
         episode = [{} for i in range(config_args.rl_script_args.number_envs)]
-
+        s = []
         while not torch.all(torch.tensor(d)):
 
             possible_actions = [_i["possible_actions"] for _i in infos]
-            prompts = [generate_prompt(_i) for _i in infos]
-
+            #prompts = [generate_prompt(_i) for _i in infos]
+            prompts = [generate_prompt(_buff, _o, _i) for _buff, _o, _i in zip(transitions_buffer, o, infos)]
             output = lm_server.custom_module_fns(['score', 'value'],
                                                  contexts=prompts,
                                                  candidates=possible_actions)
@@ -494,13 +494,7 @@ def main(config_args):
                     episode[i][str(step)] = {
                         "prompt": prompts[i], "action llm": actions_command[i], "partial reward": str(r[i])
                     }
-            s = r!=0
-
-
-
-
-
-
+            s.append(r!=0)
         transitions_buffer = [[] for _ in range(config_args.rl_script_args.number_envs)]
         _tmp = [{
             "episode": episode[i], "succes": str(s[i]), "reward": r[i]
@@ -508,6 +502,15 @@ def main(config_args):
         for _s in s:
             if _s:
                 succes += 1
+
+
+
+
+
+
+        transitions_buffer = [[] for _ in range(config_args.rl_script_args.number_envs)]
+
+
 
 
     ### saving the dataframe
