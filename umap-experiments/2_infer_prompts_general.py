@@ -15,7 +15,7 @@ class PromptEncoder:
     """
     Extracts hidden representations from various models for a set of prompts.
     """
-    def __init__(self, model_path, model_type="t5", model_name=None, device=None):
+    def __init__(self, model_path, model_type="t5", model_name=None, local_path=None, device=None):
         """
         Args:
             model_path: Path to the model
@@ -26,12 +26,13 @@ class PromptEncoder:
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.model_type = model_type.lower()
         model_source = model_name if model_name else model_path
+        model_source_path = model_source if local_path is None else local_path
         
         print(f"Loading {model_type} model from {model_source} on {self.device}...")
         
         # Load model and tokenizer based on model type
         if model_type == "t5":
-            self.model = T5ForConditionalGeneration.from_pretrained(model_source)
+            self.model = T5ForConditionalGeneration.from_pretrained(model_source_path, local_files_only=(local_path is not None))
             self.tokenizer = T5Tokenizer.from_pretrained(model_source)
             self.hidden_size = self.model.config.d_model
             self.is_encoder_decoder = True
@@ -180,7 +181,7 @@ class PromptEncoder:
         
         return all_states
 
-def extract_and_save_embeddings(prompts_file, model_path, output_dir, model_type="t5", model_name=None, batch_size=8):
+def extract_and_save_embeddings(prompts_file, model_path, output_dir, model_type="t5", model_name=None, local_path=None, batch_size=8):
     """
     Extract embeddings for all prompts and save them.
     
@@ -201,7 +202,7 @@ def extract_and_save_embeddings(prompts_file, model_path, output_dir, model_type
         prompt_samples = pickle.load(f)
     
     # Initialize the encoder
-    encoder = PromptEncoder(model_path, model_type, model_name)
+    encoder = PromptEncoder(model_path, model_type, model_name, local_path)
     
     # Extract and save embeddings for each prompt type
     for prompt_type, prompts in prompt_samples.items():
@@ -229,8 +230,10 @@ if __name__ == "__main__":
     prompts_file = "prompt_samples.pkl"
     model_path = "t5-efficient-small"
     model_name = "google/t5-efficient-small" 
-    model_type = "t5" 
+    model_type = "t5"
+    local_path = "t5-efficient-small"
     
+    local_path = None
     model_path = "gpt2"
     model_name = "openai-community/gpt2"
     model_type = "gpt"
@@ -253,4 +256,4 @@ if __name__ == "__main__":
     
     output_dir = f"{model_path}/prompts_rep_original"
     
-    extract_and_save_embeddings(prompts_file, model_path, output_dir, model_type, model_name, batch_size=8)
+    extract_and_save_embeddings(prompts_file, model_path, output_dir, model_type, model_name, local_path=local_path, batch_size=8)
