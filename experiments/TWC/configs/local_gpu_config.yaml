@@ -1,0 +1,65 @@
+lamorel_args:
+  log_level: info
+  allow_subgraph_use_whith_gradient: false
+  distributed_setup_args:
+    n_rl_processes: 1
+    n_llm_processes: 4
+  accelerate_args:
+    config_file: ../configs/accelerate/default_config.yaml
+    machine_rank: 0
+    main_process_ip: 127.0.0.1
+    num_machines: 1
+  llm_args:
+    model_type: seq2seq
+    model_path: t5-small
+    pretrained: true
+    minibatch_size: 192
+    pre_encode_inputs: true
+    load_in_4bit: true
+    parallelism:
+      use_gpu: true
+      model_parallelism_size: 1
+      synchronize_gpus_after_scoring: false
+      empty_cuda_cache_after_scoring: false
+rl_script_args:
+  path: ???
+  seed: 1
+  # ppo
+  ppo_epochs: 4
+  lam: 0.99
+  gamma: 0.99
+  lr: 1e-4
+  entropy_coef: 0.01
+  value_loss_coef: 0.5
+  clip_eps: 0.2
+  max_grad_norm: 0.5
+  minibatch_size: 250
+  use_all_params_for_optim: false
+  quantized_optimizer: false
+  # llm
+  use_lora: true
+  gradient_batch_size: 2
+  gradient_minibatch_size:
+  ## LoRA
+  lora_r: 32
+  lora_alpha: 16
+  lora_target_modules:   ["q", "v", "k", "wi", "wo", "lm_head"]
+  # rl training
+  number_envs: 16
+  max_ep_len: 200
+  epochs: 500
+  prompt_id: 0
+  steps_per_epoch: 1000
+  save_freq: 25
+  output_dir: ???
+  loading_path:
+  transitions_buffer_len: 1
+  # environment
+  name_environment: 'babyai_text' # 'babyai_text', 'alfworld'
+  task: 'BabyAI-MixedTrainLocal-v0'
+  ## BabyAI-specific
+  action_space: ["turn_left","turn_right","go_forward","pick_up","drop","toggle"]
+  ## TWC-specific
+  twc_levels:
+  config_file:
+  train_mode: true

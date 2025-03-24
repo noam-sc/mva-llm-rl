@@ -1,0 +1,64 @@
+lamorel_args:
+  log_level: info
+  allow_subgraph_use_whith_gradient: false
+  distributed_setup_args:
+    n_rl_processes: 1
+    n_llm_processes: 4
+  accelerate_args:
+    config_file: accelerate/default_config.yaml
+    machine_rank: 0
+    num_machines: ???
+    main_process_ip: ???
+    main_process_port: 12345
+  llm_args:
+    model_type: ???
+    model_path: ???
+    pretrained: true
+    minibatch_size: ???
+    load_in_4bit: false
+    pre_encode_inputs: true
+    parallelism:
+      use_gpu: true
+      model_parallelism_size: ???
+      synchronize_gpus_after_scoring: false
+      empty_cuda_cache_after_scoring: false
+rl_script_args:
+  path: ???
+  seed: ???
+  # ppo
+  ppo_epochs: 4
+  lam: 0.99
+  gamma: 0.99
+  lr: 1e-6
+  entropy_coef: 0.01
+  value_loss_coef: 0.5
+  clip_eps: 0.2
+  max_grad_norm: 0.5
+  minibatch_size: ???
+  use_all_params_for_optim: false
+  quantized_optimizer: false
+  # llm
+  use_lora: ???
+  gradient_batch_size: ???
+  gradient_minibatch_size:
+  ## LoRA
+  lora_r: 16
+  lora_alpha: 32
+  lora_target_modules:
+  # rl training
+  number_envs: ???
+  max_ep_len: 500 # useless
+  epochs: ???
+  steps_per_epoch: ???
+  save_freq: ???
+  output_dir: ???
+  loading_path:
+  transitions_buffer_len: 3
+  # environment
+  name_environment: ??? # 'babyai_text', 'alfworld'
+  task: ???
+  ## BabyAI-specific
+  action_space: ["turn_left","turn_right","go_forward","pick_up","drop","toggle"]
+  ## AlfWorld-specific
+  config_file:
+  train_mode: true
