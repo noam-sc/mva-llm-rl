@@ -1,3 +1,9 @@
+# MVA LLM Project
+
+This repository contains the code used for our project: [Reinforcement Learning for Aligning Large Language Models Agents with Interactive Environments: Quantifying and Mitigating Prompt Overfitting](https://arxiv.org/abs/2410.19920)
+
+It is based on the [original repository of the paper](https://anonymous.4open.science/r/Quantifying-and-Mitigating-Prompt-Overfitting-6548/README.md).
+
 # Quantifying-and-Mitigating-Prompt-Overfitting
 This repository contains the code used for our paper: Reinforcement Learning for Aligning Large Language Models Agents with Interactive Environments: Quantifying and Mitigating Prompt Overfitting
 ![screenshot](Figures.png)
