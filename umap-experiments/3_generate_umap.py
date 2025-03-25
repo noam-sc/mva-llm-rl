@@ -81,19 +81,14 @@ def visualize_prompt_embeddings(embeddings_dir, output_file=None, n_samples=100)
     plt.show()
 
 if __name__ == "__main__":
-    embeddings_dir = "prompts_rep_original"
-    output_file = "prompt_embeddings_umap_flan-t5-small-original.png"
+    model_name = "gpt2"
+    model_name = "blenderbot"
+    model_name = "meta-llama"
+    model_name = "opt"
+    model_name = "t5-30"
+    model_name = "t5-contrasive"
     
-    embeddings_dir = "gpt2/prompts_rep_original"
-    output_file = "prompt_embeddings_umap_gpt2.png"
-    
-    embeddings_dir = "blenderbot/prompts_rep_original"
-    output_file = "prompt_embeddings_umap_blenderbot-small.png"
-    
-    embeddings_dir = "meta-llama/prompts_rep_original"
-    output_file = "prompt_embeddings_umap_meta-llama.png"
-    
-    embeddings_dir = "opt/prompts_rep_original"
-    output_file = "prompt_embeddings_umap_opt.png"
+    embeddings_dir = f"{model_name}/prompts_rep_original"
+    output_file = f"results/prompt_embeddings_umap_{model_name}.png"
     
     visualize_prompt_embeddings(embeddings_dir, output_file)

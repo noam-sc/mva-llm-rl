@@ -19,9 +19,7 @@ def merge_lora_weights(checkpoint_path, base_model_name, output_dir=None):
     """
     print(f"Loading base model: {base_model_name}")
     
-    # Load the base model
     model = T5ForConditionalGeneration.from_pretrained(base_model_name, device_map="auto")
-    
     
     print(f"Loading adapter weights from: {checkpoint_path}")
     
@@ -45,7 +43,7 @@ def merge_lora_weights(checkpoint_path, base_model_name, output_dir=None):
     # Load the adapter weights 
     adapter_weights = torch.load(checkpoint_file)
     # Convert from DDP format
-    adapter_weights = {k.replace('module.', ''): v for k, v in adapter_weights.items()}
+    adapter_weights = {k.replace('_LLM_model.', '').replace('module.', ''): v for k, v in adapter_weights.items()}
     peft_model.load_state_dict(adapter_weights, strict=False)
     
     print("Merging weights")
